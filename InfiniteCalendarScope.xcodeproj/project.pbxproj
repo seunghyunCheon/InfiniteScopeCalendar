@@ -10,9 +10,12 @@
 		624628A92A91CC2300ADE103 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628A82A91CC2300ADE103 /* AppDelegate.swift */; };
 		624628AB2A91CC2300ADE103 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628AA2A91CC2300ADE103 /* SceneDelegate.swift */; };
 		624628AD2A91CC2300ADE103 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628AC2A91CC2300ADE103 /* ViewController.swift */; };
-		624628B02A91CC2300ADE103 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 624628AE2A91CC2300ADE103 /* Main.storyboard */; };
 		624628B22A91CC2400ADE103 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 624628B12A91CC2400ADE103 /* Assets.xcassets */; };
 		624628B52A91CC2400ADE103 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 624628B32A91CC2400ADE103 /* LaunchScreen.storyboard */; };
+		624628BD2A91CE4600ADE103 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628BC2A91CE4600ADE103 /* CalendarCell.swift */; };
+		624628C02A91CF5C00ADE103 /* DayComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628BF2A91CF5C00ADE103 /* DayComponent.swift */; };
+		624628C22A91CF8000ADE103 /* MonthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628C12A91CF8000ADE103 /* MonthComponent.swift */; };
+		624628C42A91CFA600ADE103 /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628C32A91CFA600ADE103 /* DateCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +23,13 @@
 		624628A82A91CC2300ADE103 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		624628AA2A91CC2300ADE103 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		624628AC2A91CC2300ADE103 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		624628AF2A91CC2300ADE103 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		624628B12A91CC2400ADE103 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		624628B42A91CC2400ADE103 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		624628B62A91CC2400ADE103 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		624628BC2A91CE4600ADE103 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		624628BF2A91CF5C00ADE103 /* DayComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayComponent.swift; sourceTree = "<group>"; };
+		624628C12A91CF8000ADE103 /* MonthComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthComponent.swift; sourceTree = "<group>"; };
+		624628C32A91CFA600ADE103 /* DateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,26 @@
 		624628A72A91CC2300ADE103 /* InfiniteCalendarScope */ = {
 			isa = PBXGroup;
 			children = (
+				624628BE2A91CF4E00ADE103 /* Model */,
 				624628A82A91CC2300ADE103 /* AppDelegate.swift */,
 				624628AA2A91CC2300ADE103 /* SceneDelegate.swift */,
 				624628AC2A91CC2300ADE103 /* ViewController.swift */,
-				624628AE2A91CC2300ADE103 /* Main.storyboard */,
 				624628B12A91CC2400ADE103 /* Assets.xcassets */,
 				624628B32A91CC2400ADE103 /* LaunchScreen.storyboard */,
 				624628B62A91CC2400ADE103 /* Info.plist */,
+				624628BC2A91CE4600ADE103 /* CalendarCell.swift */,
 			);
 			path = InfiniteCalendarScope;
+			sourceTree = "<group>";
+		};
+		624628BE2A91CF4E00ADE103 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				624628BF2A91CF5C00ADE103 /* DayComponent.swift */,
+				624628C12A91CF8000ADE103 /* MonthComponent.swift */,
+				624628C32A91CFA600ADE103 /* DateCalculator.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +144,6 @@
 			files = (
 				624628B52A91CC2400ADE103 /* LaunchScreen.storyboard in Resources */,
 				624628B22A91CC2400ADE103 /* Assets.xcassets in Resources */,
-				624628B02A91CC2300ADE103 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,21 +156,17 @@
 			files = (
 				624628AD2A91CC2300ADE103 /* ViewController.swift in Sources */,
 				624628A92A91CC2300ADE103 /* AppDelegate.swift in Sources */,
+				624628C02A91CF5C00ADE103 /* DayComponent.swift in Sources */,
 				624628AB2A91CC2300ADE103 /* SceneDelegate.swift in Sources */,
+				624628C22A91CF8000ADE103 /* MonthComponent.swift in Sources */,
+				624628BD2A91CE4600ADE103 /* CalendarCell.swift in Sources */,
+				624628C42A91CFA600ADE103 /* DateCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		624628AE2A91CC2300ADE103 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				624628AF2A91CC2300ADE103 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		624628B32A91CC2400ADE103 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -291,7 +303,6 @@
 				INFOPLIST_FILE = InfiniteCalendarScope/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -318,7 +329,6 @@
 				INFOPLIST_FILE = InfiniteCalendarScope/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
