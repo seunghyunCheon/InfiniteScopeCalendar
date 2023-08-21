@@ -58,7 +58,7 @@ struct DateCalculator {
         let daysInThisMonth = generateDays(for: baseDate)
         let daysInNextMonth = generateDays(for: calendar.date(byAdding: .month, value: 1, to: firstDayOfMonth)!)
 
-        return [daysInPreviousMonth ,daysInThisMonth, daysInNextMonth]
+        return [daysInPreviousMonth, daysInThisMonth, daysInNextMonth]
     }
 
     func getMonth(of date: Date) -> Int {
@@ -100,7 +100,7 @@ struct DateCalculator {
         let firstDayOfMonth = monthlyData.firstDay
         let offsetInFirstRow = monthlyData.firstDayWeekday
 
-        let days: [DayComponent] = (1..<(numberOfDays + offsetInFirstRow)).map { day in
+        var days: [DayComponent] = (1..<(numberOfDays + offsetInFirstRow)).map { day in
 
             let isIncludeInMonth = day >= offsetInFirstRow
             let dayOffset = isIncludeInMonth ? (day - offsetInFirstRow) : -(offsetInFirstRow - day)
@@ -108,6 +108,16 @@ struct DateCalculator {
             let day = generateDay(offsetBy: dayOffset, for: firstDayOfMonth, isIncludeInMonth: isIncludeInMonth)
 
             return day
+        }
+        
+        // 위 코드는 이전월의 마지막부분과 현재월을 갖고있음.
+        // 그리고 42가 넘지않으면 현재월의 마지막부분으로 부터 offset만큼 추가하고 싶은 상황.
+        var index = 1
+        while days.count < 42 {
+            let last = days.last!.date
+            let day = generateDay(offsetBy: index, for: last, isIncludeInMonth: false)
+            days.append(day)
+            index += 1
         }
 
         return days

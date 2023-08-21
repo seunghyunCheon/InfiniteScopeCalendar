@@ -21,6 +21,9 @@ class CalendarCell: UICollectionViewCell {
     
     func configure(item: DayComponent) {
         self.dateLabel.text = item.number
+        if !item.isIncludeInMonth {
+            self.dateLabel.textColor = .white
+        }
     }
     
     override func layoutSubviews() {
@@ -35,5 +38,6 @@ class CalendarCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         self.dateLabel.text = ""
+        self.dateLabel.textColor = .black
     }
 }
