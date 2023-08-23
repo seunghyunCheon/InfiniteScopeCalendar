@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class Debouncer {
     private let interval: TimeInterval
@@ -46,38 +47,88 @@ class ViewController: UIViewController {
     
     var dataSource: UICollectionViewDiffableDataSource<Section, DayComponent>!
     
-    let dateCalculator = DateCalculator(baseDate: Date())
+    lazy var dateCalculator = DateCalculator(baseDate: Date(), coreDataService: coreDataLottoPersistence)
     
-    private var days: [[DayComponent]] = []
-    private var baseDate: Date = Date() {
+    private var days: [DayComponent] = [] {
         didSet {
-            updateDays()
+            updateSnapshot()
+        }
+    }
+    private lazy var baseDate: Date = Date() {
+        didSet {
+            dateCalculator.fetchDaysInMonth(for: baseDate)
         }
     }
     
     let debouncer = Debouncer(interval: 0.05)
     
+    lazy var coreDataLottoPersistence = CoreDataLottoEntityPersistenceService(coreDataPersistenceService: CoreDataPersistenceService.shared)
+    
+    let addButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("로또추가", for: .normal)
+        button.backgroundColor = .red
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    var cancellables = Set<AnyCancellable>()
+    
+    var dire: String = "none"
+    
+    // 맨 처음에 fetch를 한다. 이때 days를 감지하고 있는 곳에서 snapshot을 설정해준다.
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        days = dateCalculator.getDaysInMonth(for: Date())
         setupCalendarView()
         configureDataSource()
-        configureSnapshot()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setupCenterXOffset()
+        setupAddButton()
+        bind()
+        dateCalculator.fetchDaysInMonth(for: Date())
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        setupCenterXOffset()
         self.collectionView.scrollToItem(at: IndexPath(item: 43, section: 0), at: .bottom, animated: false)
-        previousCenterX = 393
     }
     
-    private func updateDays() {
-        days = dateCalculator.getDaysInMonth(for: baseDate)
+    func bind() {
+        self.dateCalculator.days
+            .sink { days in
+                self.days = days
+            }
+            .store(in: &cancellables)
+    }
+    private func updateSnapshot() {
+        if dire == "right" {
+            var snapshot = self.dataSource.snapshot()
+            snapshot.deleteAllItems()
+            
+            snapshot.appendSections([.main])
+            snapshot.appendItems(self.days, toSection: .main)
+
+            DispatchQueue.main.async {
+                self.dataSource.apply(snapshot, animatingDifferences: false)
+                
+                self.collectionView.scrollToItem(at: IndexPath(item: 42, section: 0), at: .bottom, animated: false)
+            }
+            
+        } else if dire == "none" {
+            var snapshot = NSDiffableDataSourceSnapshot<Section, DayComponent>()
+            snapshot.appendSections([.main])
+            
+            // 월간일 때 snapshot
+            
+            snapshot.appendItems(days, toSection: .main)
+            
+            // 주간일 때 snapshot
+    //        snapshot.appendItems(days[0].filter { $0.isIncludeInMonth }, toSection: .main)
+    //        snapshot.appendItems(days[1].filter { $0.isIncludeInMonth }, toSection: .main)
+    //        snapshot.appendItems(days[2].filter { $0.isIncludeInMonth }, toSection: .main)
+            dataSource.apply(snapshot)
+        }
+
     }
     
     func setupCalendarView() {
@@ -88,8 +139,25 @@ class ViewController: UIViewController {
             self.collectionView.leadingAnchor.constraint(equalTo: safe.leadingAnchor),
             self.collectionView.trailingAnchor.constraint(equalTo: safe.trailingAnchor),
             self.collectionView.topAnchor.constraint(equalTo: safe.topAnchor),
-            self.collectionView.bottomAnchor.constraint(equalTo: safe.bottomAnchor),
+            self.collectionView.heightAnchor.constraint(equalToConstant: 300)
         ])
+    }
+    
+    func setupAddButton() {
+        self.view.addSubview(self.addButton)
+        
+        NSLayoutConstraint.activate([
+            self.addButton.topAnchor.constraint(equalTo: self.collectionView.bottomAnchor, constant: 10),
+            self.addButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.addButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        self.addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc
+    func addButtonTapped() {
+        coreDataLottoPersistence.saveGoalAmountEntity(Date())
     }
     
     func configureDataSource() {
@@ -104,38 +172,6 @@ class ViewController: UIViewController {
             return dateCollectionViewCell
         }
     }
-    
-    func configureSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, DayComponent>()
-        snapshot.appendSections([.main])
-        
-        // 월간일 때 snapshot
-        
-        snapshot.appendItems(days[0], toSection: .main)
-        snapshot.appendItems(days[1], toSection: .main)
-        snapshot.appendItems(days[2], toSection: .main)
-        
-        
-        // 주간일 때 snapshot
-//        snapshot.appendItems(days[0].filter { $0.isIncludeInMonth }, toSection: .main)
-//        snapshot.appendItems(days[1].filter { $0.isIncludeInMonth }, toSection: .main)
-//        snapshot.appendItems(days[2].filter { $0.isIncludeInMonth }, toSection: .main)
-        dataSource.apply(snapshot)
-    }
-    
-    @discardableResult
-    private func setupCenterXOffset() -> CGFloat {
-        let middleSectionIndex = 1
-        let width = view.frame.width * 3
-        let middleSectionX = width / 3 * CGFloat(middleSectionIndex)
-        collectionView.setContentOffset(CGPoint(x: middleSectionX, y: 0), animated: false)
-//        collectionView.contentOffset = CGPoint(x: middleSectionX, y: 0)
-//        collectionView.scrollToItem(at: IndexPath(item: 60, section: 0), at: .centeredHorizontally, animated: false)
-        return middleSectionX
-    }
-    
-    private var previousTime: TimeInterval = 0
-    private var previousCenterX: CGFloat?
     
     private func createLayout() -> UICollectionViewCompositionalLayout {
         
@@ -195,24 +231,10 @@ class ViewController: UIViewController {
             guard let self else { return }
             debouncer.debounce {
                 if point.x == 786.0 {
-                    print(self.baseDate)
-                    var snapshot = self.dataSource.snapshot()
-                    snapshot.deleteAllItems()
-                    snapshot.appendSections([.main])
+                    self.dire = "right"
                     
                     let nextMonth = self.dateCalculator.calculateNextMonth(by: self.baseDate)
                     self.baseDate = nextMonth
-                    
-                    // 다음달을 갈때 다음달에 해달하는 days들을 가져오는데 이 떄
-                    // 월간일 때 snapshotz
-                    snapshot.appendItems(self.days[0], toSection: .main)
-                    snapshot.appendItems(self.days[1], toSection: .main)
-                    snapshot.appendItems(self.days[2], toSection: .main)
-
-                    DispatchQueue.main.async {
-                        self.dataSource.apply(snapshot, animatingDifferences: false)
-                    }
-                    self.collectionView.scrollToItem(at: IndexPath(item: 42, section: 0), at: .bottom, animated: false)
                 } else if point.x == 0 {
                     var snapshot = self.dataSource.snapshot()
                     snapshot.deleteAllItems()
@@ -223,9 +245,7 @@ class ViewController: UIViewController {
                     
                     // 다음달을 갈때 다음달에 해달하는 days들을 가져오는데 이 떄
                     // 월간일 때 snapshotz
-                    snapshot.appendItems(self.days[0], toSection: .main)
-                    snapshot.appendItems(self.days[1], toSection: .main)
-                    snapshot.appendItems(self.days[2], toSection: .main)
+                    snapshot.appendItems(self.days, toSection: .main)
 
                     DispatchQueue.main.async {
                         self.dataSource.apply(snapshot, animatingDifferences: false)

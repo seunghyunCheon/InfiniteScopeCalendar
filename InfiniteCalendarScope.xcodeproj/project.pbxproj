@@ -16,6 +16,11 @@
 		624628C02A91CF5C00ADE103 /* DayComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628BF2A91CF5C00ADE103 /* DayComponent.swift */; };
 		624628C22A91CF8000ADE103 /* MonthComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628C12A91CF8000ADE103 /* MonthComponent.swift */; };
 		624628C42A91CFA600ADE103 /* DateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628C32A91CFA600ADE103 /* DateCalculator.swift */; };
+		624628C62A95CC5100ADE103 /* CoreDataPersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628C52A95CC5100ADE103 /* CoreDataPersistenceService.swift */; };
+		624628C92A95CCBB00ADE103 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 624628C72A95CCBB00ADE103 /* Model.xcdatamodeld */; };
+		624628CC2A95CD2E00ADE103 /* Lotto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628CA2A95CD2E00ADE103 /* Lotto+CoreDataClass.swift */; };
+		624628CD2A95CD2E00ADE103 /* Lotto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628CB2A95CD2E00ADE103 /* Lotto+CoreDataProperties.swift */; };
+		624628CF2A95CD5E00ADE103 /* CoreDataLottoEntityPersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624628CE2A95CD5E00ADE103 /* CoreDataLottoEntityPersistenceService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +35,11 @@
 		624628BF2A91CF5C00ADE103 /* DayComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayComponent.swift; sourceTree = "<group>"; };
 		624628C12A91CF8000ADE103 /* MonthComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthComponent.swift; sourceTree = "<group>"; };
 		624628C32A91CFA600ADE103 /* DateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateCalculator.swift; sourceTree = "<group>"; };
+		624628C52A95CC5100ADE103 /* CoreDataPersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPersistenceService.swift; sourceTree = "<group>"; };
+		624628C82A95CCBB00ADE103 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		624628CA2A95CD2E00ADE103 /* Lotto+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lotto+CoreDataClass.swift"; sourceTree = "<group>"; };
+		624628CB2A95CD2E00ADE103 /* Lotto+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Lotto+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		624628CE2A95CD5E00ADE103 /* CoreDataLottoEntityPersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataLottoEntityPersistenceService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +56,9 @@
 		6246289C2A91CC2300ADE103 = {
 			isa = PBXGroup;
 			children = (
+				624628CA2A95CD2E00ADE103 /* Lotto+CoreDataClass.swift */,
+				624628CB2A95CD2E00ADE103 /* Lotto+CoreDataProperties.swift */,
+				624628C72A95CCBB00ADE103 /* Model.xcdatamodeld */,
 				624628A72A91CC2300ADE103 /* InfiniteCalendarScope */,
 				624628A62A91CC2300ADE103 /* Products */,
 			);
@@ -70,6 +83,8 @@
 				624628B32A91CC2400ADE103 /* LaunchScreen.storyboard */,
 				624628B62A91CC2400ADE103 /* Info.plist */,
 				624628BC2A91CE4600ADE103 /* CalendarCell.swift */,
+				624628C52A95CC5100ADE103 /* CoreDataPersistenceService.swift */,
+				624628CE2A95CD5E00ADE103 /* CoreDataLottoEntityPersistenceService.swift */,
 			);
 			path = InfiniteCalendarScope;
 			sourceTree = "<group>";
@@ -154,10 +169,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				624628C62A95CC5100ADE103 /* CoreDataPersistenceService.swift in Sources */,
+				624628CD2A95CD2E00ADE103 /* Lotto+CoreDataProperties.swift in Sources */,
 				624628AD2A91CC2300ADE103 /* ViewController.swift in Sources */,
+				624628CC2A95CD2E00ADE103 /* Lotto+CoreDataClass.swift in Sources */,
 				624628A92A91CC2300ADE103 /* AppDelegate.swift in Sources */,
 				624628C02A91CF5C00ADE103 /* DayComponent.swift in Sources */,
+				624628CF2A95CD5E00ADE103 /* CoreDataLottoEntityPersistenceService.swift in Sources */,
 				624628AB2A91CC2300ADE103 /* SceneDelegate.swift in Sources */,
+				624628C92A95CCBB00ADE103 /* Model.xcdatamodeld in Sources */,
 				624628C22A91CF8000ADE103 /* MonthComponent.swift in Sources */,
 				624628BD2A91CE4600ADE103 /* CalendarCell.swift in Sources */,
 				624628C42A91CFA600ADE103 /* DateCalculator.swift in Sources */,
@@ -366,6 +386,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		624628C72A95CCBB00ADE103 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				624628C82A95CCBB00ADE103 /* Model.xcdatamodel */,
+			);
+			currentVersion = 624628C82A95CCBB00ADE103 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 6246289D2A91CC2300ADE103 /* Project object */;
 }

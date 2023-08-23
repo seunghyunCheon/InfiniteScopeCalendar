@@ -10,6 +10,7 @@ struct DayComponent: Hashable {
 
     let date: Date
     let isIncludeInMonth: Bool
+    let lottos: [Lotto]
     let id = UUID()
 }
 
